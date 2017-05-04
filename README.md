@@ -5,7 +5,7 @@ C++11 Argument Parser
 Ahoy! is a C++11 argument parser designed for ease of use.
 
 You define your inputs and destinations, and Ahoy! will automatically push the parsed arguments to the right places.
-Ahoy! also generates a pretty help dialog using this information for nice command line interfaces.
+Ahoy! also generates a nice help dialog using this information for command line interfaces.
 
 ## Examples
 ### Basic
