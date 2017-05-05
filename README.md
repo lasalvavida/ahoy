@@ -1,5 +1,5 @@
 # Ahoy!
-C++11 Argument Parser
+C++11 Argument Parser Library
 
 ## About
 Ahoy! is a C++11 argument parser designed for ease of use.
