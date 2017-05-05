@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ahoy/Parser.h"
+#include "ahoy/ahoy.h"
 #include "gtest/gtest.h"
 
 namespace {
