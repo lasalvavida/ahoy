@@ -19,9 +19,9 @@ Compiled binaries for Windows and Linux can be found under [releases](https://gi
 A live build of the current master branch is available as [latest](https://github.com/lasalvavida/ahoy/releases/tag/latest).
 These binaries are updated whenever master changes, the build succeeds, and the tests pass. These binaries are bleeding-edge and are not guaranteed to be stable.
 
-## Compile from source
+## Compile from source 
 
-1. Clone repository
+1. Clone repository (Only necessary to build with tests)
 
   ```bash
   git clone --recursive https://github.com/lasalvavida/ahoy.git
@@ -49,6 +49,8 @@ These binaries are updated whenever master changes, the build succeeds, and the 
 ### Example
 #### C++
 ```c++
+#include <ahoy/ahoy.h>
+
 int main(const int argc, const char** argv) {
     bool flag;
     int number;
