@@ -113,3 +113,29 @@ All property functions are chainable, that is they return *this*, so you can do 
      By doing this, you can still *require* `input` and `output` even when they are filled from loose arguments.
   
 * *require()* - Throw error if this option is not present
+
+### Advanced
+#### Extensibility for Custom Types
+Ahoy! uses templates under the hood, so it's pretty easy to add support for other types. You just need to define two functions:
+
+```c++
+bool TypedOption<Type>::parse(const int argc, const char** argv, int* positionPtr, string* parseError);
+string TypedOption<Type>::help();
+```
+
+*parse* defines how this option should handle the input. *argc* and *argv* are the raw command line parameters, *positionPtr* is a pointer to the current position in *argc*. The function is expected to update *positionPtr* if it consumes additional arguments. It should return *false* if there is an error, and update *parseError* with a description of what went wrong if possible.
+
+*help* defines what this option should put on the command-line. A recommended implementation would be something like:
+```c++
+string TypedOption<Type>::help() {
+	return Option::help() + " [Type]" + (hasDefault ? (" [default: " + to_string(defaultValue) + "]") : "");
+}
+```
+
+If those two functions are defined for your type, the compiler will do the rest of the work for you.
+
+## Contributing
+Contributions are welcome. Template definitions for native and STL types are also welcome, but anything outside of that scope should be implemented just in your project or as a separate extension library.
+
+## License
+Ahoy! is published under the MIT license. See [LICENSE](LICENSE) for more information.
