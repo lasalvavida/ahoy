@@ -126,7 +126,7 @@ bool TypedOption<Type>::parse(const int argc, const char** argv, int* positionPt
 string TypedOption<Type>::help();
 ```
 
-*parse* defines how this option should handle the input. *argc* and *argv* are the raw command line parameters, *positionPtr* is a pointer to the current position in *argc*. The function is expected to update *positionPtr* if it consumes additional arguments. It should return *false* if there is an error, and update *parseError* with a description of what went wrong if possible.
+*parse* defines how this option should handle the input. *argc* and *argv* are the raw command line parameters and *positionPtr* is a pointer to the current position in *argc*. The function is expected to update *positionPtr* if it consumes additional arguments. It should return *false* if there is an error, and update *parseError* with a description of what went wrong if possible.
 
 *help* defines what this option should put on the command-line. A recommended implementation would be something like:
 ```c++
