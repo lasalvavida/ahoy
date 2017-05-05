@@ -25,7 +25,7 @@ namespace ahoy {
 			countValue = count;
 			return this;
 		}
-		TypedOption<T>* default(T value) {
+		TypedOption<T>* defaults(T value) {
 			hasDefault = true;
 			defaultValue = value;
 			*output = value;

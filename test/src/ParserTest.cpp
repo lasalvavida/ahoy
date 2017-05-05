@@ -9,7 +9,7 @@ TEST(ParserTest, Parse_Simple) {
 
 	Parser* parser = new Parser();
 	parser->define("flag", &flag);
-	parser->define("result", &result)->default("default");
+	parser->define("result", &result)->defaults("default");
 
 	EXPECT_EQ(flag, false);
 	EXPECT_EQ(result, "default");
@@ -32,7 +32,7 @@ TEST(ParserTest, Parse_Aliases) {
 	Parser* parser = new Parser();
 	parser->define("flag", &flag)->alias("alias")->description("This is a flag.");
 	parser->define("anotherFlag", &anotherFlag);
-	
+
 	EXPECT_EQ(flag, false);
 
 	bool value = parser->parse(2, new const char*[2]{
@@ -132,7 +132,7 @@ TEST(ParserTest, Parse_Array) {
 	vector<string> stringValues;
 
 	Parser* parser = new Parser();
-	parser->define("intValues", &intValues)->default({ 4, 5 });
+	parser->define("intValues", &intValues)->defaults({ 4, 5 });
 	parser->define("stringValues", &stringValues)->count(1);
 
 	ASSERT_EQ(intValues.size(), 2);
