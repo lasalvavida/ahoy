@@ -1,5 +1,10 @@
 # Ahoy!
+[![Build Status](https://travis-ci.org/lasalvavida/ahoy.svg)](https://travis-ci.org/lasalvavida/ahoy)
+[![Build Status](https://ci.appveyor.com/api/projects/status/an23o90rkak5jh8i/branch/master)](https://ci.appveyor.com/project/lasalvavida/ahoy/history)
+
 C++11 Argument Parser Library
+
+
 
 ## About
 Ahoy! is a C++11 argument parser designed for ease of use.
