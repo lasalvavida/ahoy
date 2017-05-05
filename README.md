@@ -7,6 +7,39 @@ Ahoy! is a C++11 argument parser designed for ease of use.
 You define your inputs and destinations, and Ahoy! will automatically push the parsed arguments to the right places.
 Ahoy! also generates a nice help dialog using this information for command line interfaces.
 
+## Releases
+
+Compiled binaries for Windows and Linux can be found under [releases](https://github.com/lasalvavida/ahoy/releases). It is recommended to use the last versioned release
+
+A live build of the current master branch is available as [latest](https://github.com/lasalvavida/ahoy/releases/tag/latest).
+These binaries are updated whenever master changes, the build succeeds, and the tests pass. These binaries are bleeding-edge and are not guaranteed to be stable.
+
+## Compile from source
+
+1. Clone repository
+
+  ```bash
+  git clone --recursive https://github.com/lasalvavida/ahoy.git
+  ```
+2. Compile
+
+  ```bash
+  cd ahoy
+  mkdir build
+  cd build
+  cmake .. #-Dtest=ON
+  # Linux
+  make
+  # Windows
+  ## Open the generated ahoy.sln in Visual Studio and build
+  ```
+
+3. Run tests
+
+  ```bash
+  ahoy-test[.exe]
+  ```
+
 ## Usage
 ### Example
 #### C++
@@ -66,9 +99,6 @@ int main(const int argc, const char** argv) {
 >> true
    10
 ```
-
-
-
 
 ### Reference
 Ahoy! contains definitions for the following types:
