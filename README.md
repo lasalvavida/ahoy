@@ -30,8 +30,11 @@ int main(const int argc, const char** argv) {
         ->alias("number")
         ->description("A number")
         ->default(5);
+	
+    bool result = parser->parse(argc, argv);
+    delete parser;
 
-    if (!parser->parse(argc, argv)) {
+    if (!result) {
         return 1;
     }
     
