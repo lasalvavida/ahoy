@@ -67,7 +67,7 @@ string Parser::help() {
 		}
 		message += "\n";
 	}
-	
+
 	return message;
 }
 
@@ -100,7 +100,7 @@ bool Parser::parse(const int argc, const char** argv) {
 			looseStrings.push_back(argv[position]);
 		}
 		position++;
-		if (key == "-h" || key == "--help") {
+		if (key == "h" || key == "help") {
 			if (!_quiet) {
 				cout << help() << endl;
 			}
