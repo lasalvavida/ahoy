@@ -1,6 +1,6 @@
 #include <vector>
 
-#include "TypedOption.h"
+#include "ahoy/TypedOption.h"
 
 using namespace ahoy;
 using namespace std;

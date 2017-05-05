@@ -1,13 +1,20 @@
 #include <algorithm>
 #include <iostream>
 
-#include "Parser.h"
+#include "ahoy/Parser.h"
 
 using namespace ahoy;
 using namespace std;
 
-void Parser::example(string value) {
+Parser::~Parser() {
+	for (auto keyOption : _options) {
+		delete keyOption.second;
+	}
+}
+
+Parser* Parser::example(string value) {
 	_examples.push_back(value);
+	return this;
 }
 
 set<string> Parser::getAliases(string key) {
@@ -20,6 +27,16 @@ set<string> Parser::getAliases(string key) {
 
 string Parser::help() {
 	string message;
+	if (_name != "") {
+		message += _name + "\n";
+	}
+	if (_usage.size() > 0) {
+		message += "Usage:\n";
+		for (string usage : _usage) {
+			message += "  " + usage + "\n";
+		}
+		message += "\n";
+	}
 	if (_options.size() > 0) {
 		message += "Options:\n";
 		vector<Option*> options;
@@ -46,22 +63,28 @@ string Parser::help() {
 	if (_examples.size() > 0) {
 		message += "Examples:\n";
 		for (string example : _examples) {
-			message += "  " + example;
+			message += "  " + example + "\n";
 		}
+		message += "\n";
 	}
 	
 	return message;
 }
 
+Parser* Parser::name(string value) {
+	_name = value;
+	return this;
+}
+
 bool Parser::parse(const int argc, const char** argv) {
-	int position = 0;
+	int position = 1;
 	set<string> matched;
 	vector<const char*> looseStrings;
 	string parseError;
 	while (position < argc) {
 		std::string arg = argv[position];
 		std::string key = "";
-		if (arg.length() > 2) {
+		if (arg.length() >= 2) {
 			if (arg.at(0) == '-') {
 				if (arg.at(1) == '-') {
 					// String key
@@ -77,6 +100,12 @@ bool Parser::parse(const int argc, const char** argv) {
 			looseStrings.push_back(argv[position]);
 		}
 		position++;
+		if (key == "-h" || key == "--help") {
+			if (!_quiet) {
+				cout << help() << endl;
+			}
+			return false;
+		}
 		if (key != "") {
 			Option* option = NULL;
 			map<string, Option*>::iterator optionsIt = _options.find(key);
@@ -118,7 +147,7 @@ bool Parser::parse(const int argc, const char** argv) {
 	}
 	int internalIndex = 0;
 	int index = 0;
-	while (index < looseStrings.size()) {
+	while ((size_t)index < looseStrings.size()) {
 		// Try to fill in any missing indexed arguments with the loose strings
 		map<int, string>::iterator indicesIt = _indices.find(internalIndex);
 		if (indicesIt != _indices.end()) {
@@ -213,3 +242,7 @@ Parser* Parser::quiet(bool enabled) {
 	return this;
 }
 
+Parser* Parser::usage(string usage) {
+	_usage.push_back(usage);
+	return this;
+}

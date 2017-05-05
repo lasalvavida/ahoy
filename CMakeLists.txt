@@ -18,7 +18,7 @@ option(test "Build all tests." OFF)
 
 # ahoy
 include_directories(include)
-file(GLOB LIB_HEADERS "include/*.h")
+file(GLOB LIB_HEADERS "include/ahoy/*.h")
 file(GLOB LIB_SOURCES "src/*.cpp")
 add_library(${PROJECT_NAME} ${LIB_HEADERS} ${LIB_SOURCES})
 

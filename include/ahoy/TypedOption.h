@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Option.h"
-#include "Controller.h"
+#include "ahoy/Option.h"
+#include "ahoy/Controller.h"
 
 namespace ahoy {
 	template <class T>

@@ -14,13 +14,15 @@ TEST(ParserTest, Parse_Simple) {
 	EXPECT_EQ(flag, false);
 	EXPECT_EQ(result, "default");
 
-	bool value = parser->parse(3, new const char*[3] {
-		"--flag", "--result", "not-default"
+	bool value = parser->parse(4, new const char*[4] {
+		"test", "--flag", "--result", "not-default"
 	});
 
 	ASSERT_EQ(value, true);
 	EXPECT_EQ(flag, true);
 	EXPECT_EQ(result, "not-default");
+
+	delete parser;
 }
 
 TEST(ParserTest, Parse_Aliases) {
@@ -33,8 +35,8 @@ TEST(ParserTest, Parse_Aliases) {
 	
 	EXPECT_EQ(flag, false);
 
-	bool value = parser->parse(1, new const char*[1]{
-		"--alias"
+	bool value = parser->parse(2, new const char*[2]{
+		"test", "--alias"
 	});
 
 	ASSERT_EQ(value, true);
@@ -45,13 +47,15 @@ TEST(ParserTest, Parse_Aliases) {
 	parser->registerAlias("anotherFlag", "alias");
 	parser->registerAlias("alias", "superAlias");
 
-	value = parser->parse(1, new const char*[1]{
-		"--superAlias"
+	value = parser->parse(2, new const char*[2]{
+		"test", "--superAlias"
 	});
 
 	ASSERT_EQ(value, true);
 	EXPECT_EQ(flag, false);
 	EXPECT_EQ(anotherFlag, true);
+
+	delete parser;
 }
 
 TEST(ParserTest, Parse_Required) {
@@ -60,11 +64,13 @@ TEST(ParserTest, Parse_Required) {
 	Parser* parser = new Parser();
 	parser->quiet(true)->define("flag", &flag)->require();
 
-	bool value = parser->parse(1, new const char*[1]{
-		"--wrongFlag"
+	bool value = parser->parse(2, new const char*[2]{
+		"test", "--wrongFlag"
 	});
 
 	ASSERT_EQ(value, false);
+
+	delete parser;
 }
 
 TEST(ParserTest, Parse_NotEnoughArguments) {
@@ -73,18 +79,20 @@ TEST(ParserTest, Parse_NotEnoughArguments) {
 	Parser* parser = new Parser();
 	parser->quiet(true)->define("value", &value);
 
-	bool result = parser->parse(1, new const char*[1]{
-		"--value"
+	bool result = parser->parse(2, new const char*[2]{
+		"test", "--value"
 	});
 
 	ASSERT_EQ(result, false);
 
-	result = parser->parse(2, new const char*[2]{
-		"--value", "10"
+	result = parser->parse(3, new const char*[3]{
+		"test", "--value", "10"
 	});
 
 	ASSERT_EQ(result, true);
 	EXPECT_EQ(value, 10);
+
+	delete parser;
 }
 
 TEST(ParserTest, Parse_Indices) {
@@ -98,8 +106,8 @@ TEST(ParserTest, Parse_Indices) {
 	parser->define("one", &one)->index(1);
 	parser->define("two", &two)->index(2);
 
-	bool result = parser->parse(3, new const char*[3]{
-		"0", "1", "2"
+	bool result = parser->parse(4, new const char*[4]{
+		"test", "0", "1", "2"
 	});
 
 	ASSERT_EQ(result, true);
@@ -107,14 +115,16 @@ TEST(ParserTest, Parse_Indices) {
 	EXPECT_EQ(one, 1);
 	EXPECT_EQ(two, 2);
 
-	result = parser->parse(4, new const char*[4]{
-		"4", "--one", "5", "6"
+	result = parser->parse(5, new const char*[5]{
+		"test", "4", "--one", "5", "6"
 	});
 
 	ASSERT_EQ(result, true);
 	EXPECT_EQ(zero, 4);
 	EXPECT_EQ(one, 5);
 	EXPECT_EQ(two, 6);
+
+	delete parser;
 }
 
 TEST(ParserTest, Parse_Array) {
@@ -129,8 +139,8 @@ TEST(ParserTest, Parse_Array) {
 	EXPECT_EQ(intValues[0], 4);
 	EXPECT_EQ(intValues[1], 5);
 
-	bool result = parser->parse(7, new const char*[7]{
-		"--intValues", "2", "1", "0",
+	bool result = parser->parse(8, new const char*[8]{
+		"test", "--intValues", "2", "1", "0",
 		"--stringValues", "one", "two"
 	});
 
@@ -142,4 +152,6 @@ TEST(ParserTest, Parse_Array) {
 
 	ASSERT_EQ(stringValues.size(), 1);
 	EXPECT_EQ(stringValues[0], "one");
+
+	delete parser;
 }
