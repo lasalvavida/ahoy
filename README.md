@@ -30,8 +30,11 @@ int main(const int argc, const char** argv) {
         ->alias("number")
         ->description("A number")
         ->default(5);
+	
+    bool result = parser->parse(argc, argv);
+    delete parser;
 
-    if (!parser->parse(argc, argv)) {
+    if (!result) {
         return 1;
     }
     
@@ -136,6 +139,8 @@ If those two functions are defined for your type, the compiler will do the rest 
 
 ## Contributing
 Contributions are welcome. Template definitions for native and STL types are also welcome, but anything outside of that scope should be implemented just in your project or as a separate extension library.
+
+Please run the tests locally before opening a pull request.
 
 ## License
 Ahoy! is published under the MIT license. See [LICENSE](LICENSE) for more information.
