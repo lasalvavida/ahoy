@@ -1,28 +1,24 @@
 cmake_minimum_required (VERSION 3.1.0)
 
 set(PROJECT_NAME ahoy)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_EXTENSIONS_OFF)
 
 project(${PROJECT_NAME})
-if(MSVC)
-  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
-  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
-  set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /MTd")
-  set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} /MT")
-  add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-  add_compile_options(-std=c++11 -lstdc++fs)
-endif()
 
-# cmake -Dtest=ON to build with tests
-option(test "Build all tests." OFF)
+# cmake -DTEST_AHOY=ON to build with tests
+option(TEST_AHOY "Build tests for Ahoy" OFF)
 
 # ahoy
-include_directories(include)
+set(AHOY_INCLUDE_DIRS ${CMAKE_CURRENT_LIST_DIR}/include)
+include_directories(${AHOY_INCLUDE_DIRS})
 file(GLOB LIB_HEADERS "include/ahoy/*.h")
 file(GLOB LIB_SOURCES "src/*.cpp")
 add_library(${PROJECT_NAME} ${LIB_HEADERS} ${LIB_SOURCES})
 
-if(test)
+if(TEST_AHOY)
+  set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
   enable_testing()
 
   # gtest
