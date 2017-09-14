@@ -84,22 +84,19 @@ bool Parser::parse(const int argc, const char** argv) {
 	while (position < argc) {
 		std::string arg = argv[position];
 		std::string key = "";
-		bool handled = false;
 		if (arg.length() >= 2) {
 			if (arg.at(0) == '-') {
 				if (arg.at(1) == '-') {
 					// String key
 					key = arg.substr(2);
-					handled = true;
 				}
 				else {
 					// Single-character key
 					key = arg.at(1);
-					handled = true;
 				}
 			}
 		}
-		if (!handled) {
+		if (key == "") {
 			looseStrings.push_back(argv[position]);
 		}
 		position++;
