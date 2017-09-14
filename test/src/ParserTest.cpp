@@ -172,3 +172,20 @@ TEST(ParserTest, Parse_Array) {
 
 	delete parser;
 }
+
+TEST(ParserTest, Parse_MultipleSingleKeys) {
+	bool a = false, b = false, c = false;
+	Parser* parser = new Parser();
+	parser->define("a", &a);
+	parser->define("b", &b);
+	parser->define("c", &c);
+
+	bool result = parser->parse(2, new const char*[2]{
+		"test", "-abc"
+	});
+
+	ASSERT_EQ(result, true);
+	EXPECT_EQ(a, true);
+	EXPECT_EQ(b, true);
+	EXPECT_EQ(c, true);
+}

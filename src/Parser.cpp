@@ -82,66 +82,76 @@ bool Parser::parse(const int argc, const char** argv) {
 	vector<const char*> looseStrings;
 	string parseError;
 	while (position < argc) {
-		std::string arg = argv[position];
-		std::string key = "";
+		string arg = argv[position];
+		vector<string> keys;
 		if (arg.length() >= 2) {
 			if (arg.at(0) == '-') {
 				if (arg.at(1) == '-') {
 					// String key
-					key = arg.substr(2);
+					keys.push_back(arg.substr(2));
 				}
 				else {
-					// Single-character key
-					key = arg.at(1);
+					if (arg.length() > 2) {
+						// Split out into multiple single character keys
+						for (size_t i = 1; i < arg.length(); i++) {
+							keys.push_back(arg.substr(i, 1));
+						}
+					}
+					else {
+						// Single-character key
+						keys.push_back(arg.substr(1, 1));
+					}
 				}
 			}
 		}
-		if (key == "") {
+		if (keys.size() == 0) {
 			looseStrings.push_back(argv[position]);
 		}
 		position++;
-		if (key == "h" || key == "help") {
-			if (!_quiet) {
-				cout << help() << endl;
+		for (string key : keys) {
+			if (key == "h" || key == "help") {
+				if (!_quiet) {
+					cout << help() << endl;
+				}
+				return false;
 			}
-			return false;
-		}
-		if (key != "") {
-			Option* option = NULL;
-			map<string, Option*>::iterator optionsIt = _options.find(key);
-			if (optionsIt != _options.end()) {
-				// Matched option
-				option = optionsIt->second;
-			}
-			else {
-				// Try aliases
-				map<string, string>::iterator aliasesIt = _aliases.find(key);
-				if (aliasesIt != _aliases.end()) {
-					// Matched alias
-					key = aliasesIt->second;
-					optionsIt = _options.find(key);
-					if (optionsIt != _options.end()) {
-						// Matched option
-						option = optionsIt->second;
+			if (key != "") {
+				Option* option = NULL;
+				map<string, Option*>::iterator optionsIt = _options.find(key);
+				if (optionsIt != _options.end()) {
+					// Matched option
+					option = optionsIt->second;
+				}
+				else {
+					// Try aliases
+					map<string, string>::iterator aliasesIt = _aliases.find(key);
+					if (aliasesIt != _aliases.end()) {
+						// Matched alias
+						key = aliasesIt->second;
+						optionsIt = _options.find(key);
+						if (optionsIt != _options.end()) {
+							// Matched option
+							option = optionsIt->second;
+						}
 					}
 				}
-			}
-			if (option != NULL) {
-				matched.insert(key);
-				if (!option->parse(argc, argv, &position, &parseError)) {
+				if (option != NULL) {
+					matched.insert(key);
+					if (!option->parse(argc, argv, &position, &parseError)) {
+						if (!_quiet) {
+							cout << help() << "Error while parsing argument: " << key << " " << parseError << endl << endl;
+						}
+						return false;
+					}
+				}
+				else if (_strict) {
+					// Option isn't defined and in strict mode
 					if (!_quiet) {
-						cout << help() << "Error while parsing argument: " << key << " " << parseError << endl << endl;
+						string strictError = "Unknown argument in strict mode: " + key;
+						cout << help() << strictError << endl << endl;
 					}
 					return false;
 				}
-			}
-			else if (_strict) {
-				// Option isn't defined and in strict mode
-				if (!_quiet) {
-					string strictError = "Unknown argument in strict mode: " + key;
-					cout << help() << strictError << endl << endl;
-				}
-				return false;
 			}
 		}
 	}
