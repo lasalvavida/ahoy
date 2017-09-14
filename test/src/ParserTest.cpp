@@ -127,6 +127,23 @@ TEST(ParserTest, Parse_Indices) {
 	delete parser;
 }
 
+TEST(ParserTest, Parse_Indices_Required) {
+	string str1, str2;
+
+	Parser* parser = new Parser();
+	parser->quiet(true);
+	parser->define("str1", &str1)->require()->index(0);
+	parser->define("str2", &str2)->require()->index(1);
+
+	bool result = parser->parse(3, new const char*[3]{
+		"test", "one", "two"
+	});
+
+	ASSERT_EQ(result, true);
+	EXPECT_EQ(str1, "one");
+	EXPECT_EQ(str2, "two");
+}
+
 TEST(ParserTest, Parse_Array) {
 	vector<int> intValues;
 	vector<string> stringValues;
