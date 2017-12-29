@@ -8,7 +8,7 @@ git:
 cache:
 - build/dependencies
 install:
-- if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
+- if [ "$CXX" == "g++" ] && [ "$TRAVIS_OS_NAME" == "linux" ]; then export CXX="g++-5" CC="gcc-5"; fi
 addons:
   apt:
     sources:
