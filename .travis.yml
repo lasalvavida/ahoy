@@ -1,3 +1,6 @@
+os:
+  - linux
+  - osx
 language: cpp
 compiler: g++
 git:
@@ -23,7 +26,7 @@ after_success:
   latest master from CI"; git push --quiet https://${GH_TOKEN}@github.com/lasalvavida/ahoy
   -f --tags > /dev/null 2>&1; fi;
 - if [ ! -z "$TRAVIS_TAG" ]; then export RELEASE=`echo "$TRAVIS_TAG"| awk -F"-" '{print
-  $1}'`; export RELEASE_FILE=ahoy-$RELEASE-linux.zip; find . -path ./CMakeFiles -prune
+  $1}'`; export RELEASE_FILE=ahoy-$RELEASE-$TRAVIS_OS_NAME.zip; find . -path ./CMakeFiles -prune
   -o -iname \*.a -o -perm /u+x | zip -@ -j $RELEASE_FILE; fi;
 env:
   global:
