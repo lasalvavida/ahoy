@@ -27,7 +27,7 @@ after_success:
   -f --tags > /dev/null 2>&1; fi;
 - if [ ! -z "$TRAVIS_TAG" ]; then export RELEASE=`echo "$TRAVIS_TAG"| awk -F"-" '{print
   $1}'`; export RELEASE_FILE=ahoy-$RELEASE-$TRAVIS_OS_NAME.zip; find . -path ./CMakeFiles -prune
-  -o -iname \*.a -o -perm /u=x | zip -@ -j $RELEASE_FILE; fi;
+  -o -iname \*.a -o -executable | zip -@ -j $RELEASE_FILE; fi;
 env:
   global:
   - secure: UqM6PUInMCPLaRMFzbFRxnpWq1xUxVGLj5CHDMigyzazlAZdXk4uwOKzyJ/w9X50tjT60bzsGeW/Sj0nzE7NiECCNCQrWoHuCtGPDCHYHP2nyF05fjmAdVtYEx9G4gKbXSFn/V3Op79eKaa38Q6wYao8UQ24wDL/davxF/CnlzjvmjTETdn8Ds+4owOo6XzPVC7oJLWQkVDJ8LG/vef929ylhgH5HMafl89x2uy0ziaSt4MtgfEvJQlkn+ifNFb+8LchBSqqMF+OlbTDE4I1ArZL8rIK+Q5QgZNwjn932nFKRohEmDrkcB5zvyzK++b580B2r7Y3KM9CHO+V9Bb2VJbJNEhptHDNwtXratkqXkHUcZ0bnngkK36uCpy5NAY2I2h356ySL7dENojsJmPMFR3YpYlARZbtmD5J4UVW2N29M2JUAhMIbhpf5m+6W6XH8TAxbejvEU6JQGB9z3u2XaYZeG5HtOZwno451itbmal7xa/sZsqL8RqOJ70u+cKcvLczyP8y4uuUNmDghftfpKem9/CnL4Yk2iSl4OgoVKT7cnz+6vie5ufQ6vB/SvVaAyg57zGvR1PZOG2/R8kEb0sobbiJIHwHQAePo0Hu6FFnuGJZ7lVmL250PO4eK7Wx6GNg5mat3U20mU8OmIH6UrAzNB/isop8ycfCNp8Koo8=
