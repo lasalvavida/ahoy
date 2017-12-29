@@ -14,7 +14,7 @@ Ahoy! also generates a nice help dialog using this information for command line 
 
 ## Releases
 
-Compiled binaries for Windows and Linux can be found under [releases](https://github.com/lasalvavida/ahoy/releases). It is recommended to use the last versioned release
+Compiled binaries for Windows, Linux, and OSX can be found under [releases](https://github.com/lasalvavida/ahoy/releases). It is recommended to use the last versioned release
 
 A live build of the current master branch is available as [latest](https://github.com/lasalvavida/ahoy/releases/tag/latest).
 These binaries are updated whenever master changes, the build succeeds, and the tests pass. These binaries are bleeding-edge and are not guaranteed to be stable.
@@ -33,7 +33,7 @@ These binaries are updated whenever master changes, the build succeeds, and the 
   mkdir build
   cd build
   cmake .. #-Dtest=ON
-  # Linux
+  # Linux/OSX
   make
   # Windows
   ## Open the generated ahoy.sln in Visual Studio and build
