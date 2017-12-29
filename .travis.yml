@@ -1,12 +1,9 @@
 language: cpp
 compiler: g++
 git:
-  submodules: false
+  submodules: true
 cache:
 - build/dependencies
-before_install:
-- sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
-- git submodule update --init --recursive
 install:
 - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
 addons:
