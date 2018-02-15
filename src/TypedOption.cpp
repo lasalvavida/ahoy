@@ -118,7 +118,7 @@ namespace ahoy {
 			defaultString += to_string(value);
 		}
 		defaultString += "]";
-		return Option::help() + " [vec<int>" + (countValue < 0 ? "" : ", " + countValue) + "]" + (hasDefault ? (" [default: " + defaultString + "]") : "");
+		return Option::help() + " [vec<int>" + (countValue < 0 ? "" : ", " + to_string(countValue)) + "]" + (hasDefault ? (" [default: " + defaultString + "]") : "");
 	}
 
 	template<>
