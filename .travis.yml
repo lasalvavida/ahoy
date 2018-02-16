@@ -20,7 +20,7 @@ addons:
     - g++-5
     - cmake
     - cmake-data
-script: mkdir build && cd build && cmake -Dtest=ON .. && make && make test
+script: mkdir build && cd build && cmake -DTEST_AHOY=ON .. && make && make test
 after_success:
 - if [ "$TRAVIS_BRANCH" == "master" ]; then git config --global user.email "builds@travis-ci.com";
   git config --global user.name "Travis CI"; git tag -f -a latest -m "Live build of
