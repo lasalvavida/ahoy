@@ -25,5 +25,7 @@ namespace ahoy {
 		virtual std::string help() {
 			return helpPrefix() + "\t" + helpSuffix();
 		};
+		
+		virtual ~Option() {}
 	};
 }
