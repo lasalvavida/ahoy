@@ -32,7 +32,7 @@ These binaries are updated whenever master changes, the build succeeds, and the 
   cd ahoy
   mkdir build
   cd build
-  cmake .. #-Dtest=ON
+  cmake .. #-DTEST_AHOY=ON
   # Linux/OSX
   make
   # Windows
